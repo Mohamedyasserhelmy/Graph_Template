@@ -1,0 +1,61 @@
+
+import java.io.InputStream;
+import java.util.*;
+
+public class Graph {
+        public int V;				//# Vertices 
+        public int E;			        // # Edges
+        public LinkedList<Integer>[] adj;	// Adjacency List
+        
+
+        Graph(int vertex)
+        {
+            V = vertex;
+            adj = new LinkedList[V+1];
+            for (int i =0; i <= V; i++)
+            {
+                adj[i] = new LinkedList<Integer>();          // Initializing Adjacency Matrix
+            }
+        }
+        Graph(Scanner in){
+            this(in.nextInt());
+            E = V - 1;
+            for (int i =1; i <= E; i++)
+            {
+                int v1 = in.nextInt();
+                int v2 = in.nextInt();
+                addEdge(v1, v2);
+            }
+          }
+
+        void addEdge(int v1, int v2)
+        {
+                adj[v1].add(v2);
+                adj[v2].add(v1);   				// Valid For Undirected Graph Since (V1---->V2 && V2---->V1)
+        }
+
+        Iterable<Integer> adj(int v){
+                    return adj[v];				// Returns adjacent vertices to vertex(v) 
+        }
+
+        public String toString(){
+            String s = "";
+            for (int v = 1; v <= V; v++)
+            {
+                s += v + ": ";
+                for (int j : this.adj(v))			// Utility Function
+                {
+                    s+= j + " ";
+                }
+                s+= "\n";
+            }
+
+            return s;
+        }
+
+	static public void main(String...args)
+        {
+            Scanner scn = new Scanner (System.in);
+            Graph g = new Graph(scn);
+	}
+}
